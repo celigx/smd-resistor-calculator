@@ -2,6 +2,25 @@
 
 body {
   font-family: 'Inter', sans-serif;
+  margin: 0;
+}
+
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.leftScreen {
+  background: #fff;
+  flex: 1;
+  text-align: center;
+}
+
+.rightScreen {
+  background: #040403;
+  flex: 1;
+  height: 100vh;
 }
 
 .title {
@@ -10,6 +29,7 @@ body {
 
 .smd {
   display: flex;
+  justify-content: center;
 }
 
 .square {

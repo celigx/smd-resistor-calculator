@@ -63,14 +63,17 @@ export default function Home() {
   }
 
   return (
-    <div>
-      <h1 className="title">Enter SMD Code:</h1>
-      <div className="smd">
-        <span className="square left" />
-        <input className="input" value={value} maxLength='4' onChange={valueChange} />
-        <span className="square right" />
+    <div className="main">
+      <div className="leftScreen">
+        <h1 className="title">Enter SMD Code:</h1>
+        <div className="smd">
+          <span className="square left" />
+          <input className="input" value={value} maxLength='4' onChange={valueChange} />
+          <span className="square right" />
+        </div>
+        <h1 className="output">Resistance: <span className="bold">{value.match(/[a-zA-Z]/g) ? decimal : output}</span></h1>
       </div>
-      <h1 className="output">Resistance: <span className="bold">{value.match(/[a-zA-Z]/g) ? decimal : output}</span></h1>
+      <div className="rightScreen"></div>
     </div>
   )
 }
