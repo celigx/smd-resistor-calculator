@@ -3,9 +3,11 @@ import React, { useState, useEffect } from "react"
 export default function Home() {
   const [value, setValue] = useState('')
   const [output, setOutput] = useState('')
+  const [decimal, setDecimal] = useState('')
 
   useEffect(() => {
     calculateSMD()
+    changeToDecimal()
   })
   
   // Update input change
@@ -30,6 +32,14 @@ export default function Home() {
       : Math.abs(num) + 'Ω'
   }
 
+  const changeToDecimal = () => {
+    // Replace letter R with a dot
+    const letter = value.toString().toUpperCase()
+    const replaceLetter = `${+letter.replace('R', '.')}Ω`
+
+    setDecimal(replaceLetter)
+  }
+
   const calculateSMD = () => {
     // Remove last number
     const mainNumber = parseInt(value.toString().slice(0, -1))
@@ -45,7 +55,7 @@ export default function Home() {
   <div>
     <h1>Enter SMD Code:</h1>
     <input value={value} maxLength='4' onChange={valueChange} />
-    <h1>{output}</h1>
+    <h1>Resistance: {value.match(/[a-zA-Z]/g) ? decimal : output}</h1>
   </div>
   )
 }
