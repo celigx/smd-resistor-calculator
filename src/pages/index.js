@@ -6,9 +6,19 @@ export default function Home() {
   const [decimal, setDecimal] = useState('')
 
   useEffect(() => {
-    calculateSMD()
-    changeToDecimal()
+    showOutput()
   })
+
+  // Show output if value length is equal or bigger than 3, otherwise don't show resistance output
+  const showOutput = () => {
+    if (value.length >= 3) {
+      calculateSMD()
+      changeToDecimal()
+    } else {
+      setDecimal('')
+      setOutput('')
+    }
+  }
   
   // Update input change
   const valueChange = (e) => {
