@@ -13,6 +13,23 @@ export default function Home() {
     setValue(e.target.value)
   }
 
+  // Format number to add k instead of thousand (1000 => 1kΩ) etc.
+  const formatNumber = (num) => {
+    // Billion
+    return Math.abs(num) >= 1.0e+9
+
+      ? Math.abs(num) / 1.0e+9 + 'GΩ'
+      // Million
+      : Math.abs(num) >= 1.0e+6
+
+      ? Math.abs(num) / 1.0e+6 + 'MΩ'
+      // Thousand
+      : Math.abs(num) >= 1.0e+3
+
+      ? Math.abs(num) / 1.0e+3 + 'kΩ'
+      : Math.abs(num) + 'Ω'
+  }
+
   const calculateSMD = () => {
     // Remove last number
     const mainNumber = parseInt(value.toString().slice(0, -1))
@@ -21,7 +38,7 @@ export default function Home() {
     // Calculate SMD
     const calculate = mainNumber * Math.pow(10, lastNumber)
 
-    setOutput(calculate)
+    setOutput(formatNumber(calculate))
   }
 
   return (
