@@ -64,7 +64,7 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Enter SMD Code:</h1>
+      <h1 className="title">Enter SMD Code:</h1>
       <div className="smd">
         <span className="square left" />
         <input className="input" value={value} maxLength='4' onChange={valueChange} />
