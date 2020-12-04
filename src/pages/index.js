@@ -26,7 +26,7 @@ export default function Home() {
   const valueChange = (e) => {
     // Only allow digits and character r
     const value = e.target.value.replace(/[^r?0-9]/gi, "")
-    
+
     setValue(value)
   }
 
@@ -72,7 +72,7 @@ export default function Home() {
         <h1 className="title">Enter SMD Code:</h1>
         <div className="smd">
           <span className="square left" />
-          <input className="input" value={value} maxLength='4' onChange={valueChange} />
+          <input className="input" value={value} onChange={valueChange} maxLength='4' autoFocus />
           <span className="square right" />
         </div>
         <h1 className="output">Resistance: <span className="bold">{value.match(/[a-zA-Z]/g) ? decimal : output}</span></h1>
