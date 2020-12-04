@@ -72,7 +72,7 @@ export default function Home() {
         <h1 className="title">Enter SMD Code:</h1>
         <div className="smd">
           <span className="square left" />
-          <input className="input" value={value} onChange={valueChange} maxLength='4' autoFocus />
+          <input className="input" value={value} onChange={valueChange} maxLength='4' autoFocus spellCheck='false' />
           <span className="square right" />
         </div>
         <h1 className="output">Resistance: <span className="bold">{value.match(/[a-zA-Z]/g) ? decimal : output}</span></h1>
