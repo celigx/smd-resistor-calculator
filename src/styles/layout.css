@@ -60,6 +60,7 @@ body {
   border-width: 0;
   border-style: none;
   border-color: none;
+  text-transform: uppercase;
 }
 
 .input:focus {
