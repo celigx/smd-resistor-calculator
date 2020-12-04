@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import "../styles/layout.css"
+import CircuitBoard from "../assets/CircuitBoard.svg"
 
 export default function Home() {
   const [value, setValue] = useState('')
@@ -73,7 +74,9 @@ export default function Home() {
         </div>
         <h1 className="output">Resistance: <span className="bold">{value.match(/[a-zA-Z]/g) ? decimal : output}</span></h1>
       </div>
-      <div className="rightScreen"></div>
+      <div className="rightScreen">
+        <CircuitBoard />
+      </div>
     </div>
   )
 }
