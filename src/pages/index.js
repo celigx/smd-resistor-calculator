@@ -24,7 +24,10 @@ export default function Home() {
   
   // Update input change
   const valueChange = (e) => {
-    setValue(e.target.value)
+    // Only allow digits and character r
+    const value = e.target.value.replace(/[^r?0-9]/gi, "")
+    
+    setValue(value)
   }
 
   // Format number to add k instead of thousand (1000 => 1kΩ) etc.
