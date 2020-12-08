@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react"
 import "../styles/layout.css"
 import CircuitBoard from "../assets/CircuitBoard.svg"
+import { digit, multiply } from '../components/EIA96Codes';
 
 export default function Home() {
   const [value, setValue] = useState('')
   const [output, setOutput] = useState('')
   const [decimal, setDecimal] = useState('')
+  const [EIA96, setEIA96] = useState('')
 
   useEffect(() => {
     showOutput()
@@ -16,16 +18,18 @@ export default function Home() {
     if (value.length >= 3) {
       calculateSMD()
       changeToDecimal()
+      calculateEIA96()
     } else {
       setDecimal('')
       setOutput('')
+      setEIA96('')
     }
   }
   
   // Update input change
   const valueChange = (e) => {
     // Only allow digits and character r
-    const value = e.target.value.replace(/[^r?0-9]/gi, "")
+    const value = e.target.value.replace(/[^rzyxsabhcdef?0-9]/gi, "")
 
     setValue(value)
   }
@@ -66,6 +70,35 @@ export default function Home() {
     setOutput(formatNumber(calculate))
   }
 
+  const calculateEIA96 = () => {
+    // Get the index of digit object from EIA96Codes.js
+    const indexOfDigit = digit.map(x => x.code).indexOf(value.replace(/\D/gi, ""))
+    // Get the value of index | If there's no value, return 'null', otherwise return value of index
+    const valueOfIndexDigit = indexOfDigit === -1 ? 'null' : digit[indexOfDigit].value
+
+    // Get the index of const multiply object from EIA96Codes.js
+    const indexOfMultiply = multiply.map(x => x.code).indexOf((value.toUpperCase()).replace(/\d/gi, ""))
+    // Get the value of index | If there's no value, return 'null', otherwise return value of index
+    const valueOfIndexMultiply = indexOfMultiply === -1 ? 'null' : multiply[indexOfMultiply].value
+
+    // Calculate values of digit and multiply
+    const calculateEIA96 = Number(valueOfIndexDigit * valueOfIndexMultiply)
+
+    setEIA96(formatNumber(calculateEIA96) + ' ' + '(≤1%)')
+  }
+
+  // Display Calculated Reistance
+  const displayOutput = (
+    value.match(/r/g) 
+      // Regex - show decimal if character r is matched
+      ? decimal
+      : value.match(/[zyxsabhcdef]/g)
+      // Regex - show EIA96 if characters zyxsabgcdef are matched
+      ? EIA96
+      // Else show output
+      : output
+  )
+
   return (
     <div className="main">
       <div className="leftScreen">
@@ -75,7 +108,7 @@ export default function Home() {
           <input className="input" value={value} onChange={valueChange} maxLength='4' autoFocus spellCheck='false' />
           <span className="square right" />
         </div>
-        <h1 className="output">Resistance: <span className="bold">{value.match(/[a-zA-Z]/g) ? decimal : output}</span></h1>
+        <h1 className="output">Resistance: <span className="bold">{displayOutput}</span></h1>
       </div>
       <div className="rightScreen">
         <CircuitBoard />
