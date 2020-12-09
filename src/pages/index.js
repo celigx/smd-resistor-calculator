@@ -84,7 +84,7 @@ export default function Home() {
     // Calculate values of digit and multiply
     const calculateEIA96 = Number(valueOfIndexDigit * valueOfIndexMultiply)
 
-    setEIA96(formatNumber(calculateEIA96) + ' ' + '(≤1%)')
+    setEIA96(`${formatNumber(calculateEIA96)} (≤1%)`)
   }
 
   // Display Calculated Reistance
