@@ -54,9 +54,10 @@ export default function Home() {
   const changeToDecimal = () => {
     // Replace letter R with a dot
     const letter = value.toString().toUpperCase()
-    const replaceLetter = `${+letter.replace('R', '.')}Ω`
+    const replaceLetter = Number(letter.replace('R', '.'))
 
-    setDecimal(replaceLetter)
+    // If variable is NaN is true, return 'Error', else return variable
+    isNaN(replaceLetter) ? setDecimal('Error') : setDecimal(`${replaceLetter}Ω`)
   }
 
   const calculateSMD = () => {
@@ -84,7 +85,8 @@ export default function Home() {
     // Calculate values of digit and multiply
     const calculateEIA96 = Number(valueOfIndexDigit * valueOfIndexMultiply)
 
-    setEIA96(`${formatNumber(calculateEIA96)} (≤1%)`)
+    // If variable is NaN is true, return 'Error', else return variable
+    isNaN(calculateEIA96) ? setEIA96('Error') : setEIA96(`${formatNumber(calculateEIA96)} (≤1%)`)
   }
 
   // Display Calculated Reistance
