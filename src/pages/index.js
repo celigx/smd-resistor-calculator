@@ -6,8 +6,6 @@ import { digit, multiply } from '../components/EIA96Codes';
 export default function Home() {
   const [value, setValue] = useState('')
   const [output, setOutput] = useState('')
-  const [decimal, setDecimal] = useState('')
-  const [EIA96, setEIA96] = useState('')
 
   useEffect(() => {
     showOutput()
@@ -15,15 +13,7 @@ export default function Home() {
 
   // Show output if value length is equal or bigger than 3, otherwise don't show resistance output
   const showOutput = () => {
-    if (value.length >= 3) {
-      calculateSMD()
-      changeToDecimal()
-      calculateEIA96()
-    } else {
-      setDecimal('')
-      setOutput('')
-      setEIA96('')
-    }
+    value.length >= 3 ? displayOutput() : setOutput('')
   }
   
   // Update input change
@@ -57,7 +47,7 @@ export default function Home() {
     const replaceLetter = Number(letter.replace('R', '.'))
 
     // If variable is NaN is true, return 'Error', else return variable
-    isNaN(replaceLetter) ? setDecimal('Error') : setDecimal(`${replaceLetter}Ω`)
+    isNaN(replaceLetter) ? setOutput('Error') : setOutput(`${replaceLetter}Ω`)
   }
 
   const calculateSMD = () => {
@@ -86,20 +76,19 @@ export default function Home() {
     const calculateEIA96 = Number(valueOfIndexDigit * valueOfIndexMultiply)
 
     // If variable is NaN is true, return 'Error', else return variable
-    isNaN(calculateEIA96) ? setEIA96('Error') : setEIA96(`${formatNumber(calculateEIA96)} (≤1%)`)
+    isNaN(calculateEIA96) ? setOutput('Error') : setOutput(`${formatNumber(calculateEIA96)} (≤1%)`)
   }
 
-  // Display Calculated Reistance
-  const displayOutput = (
+  // Display calculated reistance
+  const displayOutput = () => {
     value.match(/r/g) 
-      // Regex - show decimal if character r is matched
-      ? decimal
+      // Show function if character r is matched
+      ? changeToDecimal()
       : value.match(/[zyxsabhcdef]/g)
-      // Regex - show EIA96 if characters zyxsabgcdef are matched
-      ? EIA96
-      // Else show output
-      : output
-  )
+      // Show function if characters zyxsabgcdef are matched
+      ? calculateEIA96()
+      : calculateSMD()
+  }
 
   return (
     <div className="main">
@@ -110,7 +99,7 @@ export default function Home() {
           <input className="input" value={value} onChange={valueChange} maxLength='4' autoFocus spellCheck='false' />
           <span className="square right" />
         </div>
-        <h1 className="output">Resistance: <span className="bold">{displayOutput}</span></h1>
+        <h1 className="output">Resistance: <span className="bold">{output}</span></h1>
       </div>
       <div className="rightScreen">
         <CircuitBoard />
