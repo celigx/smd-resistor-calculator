@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import "../styles/layout.css"
+import "../styles/layout.sass"
 import CircuitBoard from "../assets/CircuitBoard.svg"
 import { digit, multiply } from '../components/EIA96Codes';
 

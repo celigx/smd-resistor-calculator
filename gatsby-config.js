@@ -26,6 +26,13 @@ module.exports = {
         display: `standalone`,
         icon: `src/images/favicon.png`,
       },
+    },
+    {
+      resolve: `gatsby-plugin-sass`,
+      options: {
+        implementation: require("sass"),
+        indentedSyntax: true,
+    },
     }
   ],
 }
