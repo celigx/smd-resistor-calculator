@@ -28,15 +28,12 @@ export default function Home() {
   const formatNumber = (num) => {
     // Billion
     return Math.abs(num) >= 1.0e+9
-
       ? Math.abs(num) / 1.0e+9 + 'GΩ'
       // Million
       : Math.abs(num) >= 1.0e+6
-
       ? Math.abs(num) / 1.0e+6 + 'MΩ'
       // Thousand
       : Math.abs(num) >= 1.0e+3
-
       ? Math.abs(num) / 1.0e+3 + 'kΩ'
       : Math.abs(num) + 'Ω'
   }
@@ -66,20 +63,23 @@ export default function Home() {
     const indexOfDigit = digit.map(x => x.code).indexOf(value.replace(/\D/gi, ""))
     // Get the value of index | If there's no value, return 'null', otherwise return value of index
     const valueOfIndexDigit = indexOfDigit === -1 ? 'null' : digit[indexOfDigit].value
-
     // Get the index of const multiply object from EIA96Codes.js
     const indexOfMultiply = multiply.map(x => x.code).indexOf((value.toUpperCase()).replace(/\d/gi, ""))
     // Get the value of index | If there's no value, return 'null', otherwise return value of index
     const valueOfIndexMultiply = indexOfMultiply === -1 ? 'null' : multiply[indexOfMultiply].value
-
     // Calculate values of digit and multiply
     const calculateEIA96 = Number(valueOfIndexDigit * valueOfIndexMultiply)
 
-    // If variable is NaN is true, return 'Error', else return variable
-    isNaN(calculateEIA96) ? setOutput('Error') : setOutput(`${formatNumber(calculateEIA96)} (≤1%)`)
+    // If variable is NaN, return 'Error'
+    isNaN(calculateEIA96) 
+      ? setOutput('Error')
+      // If letter is last, return variable 
+      : value.match(/[a-z]$/g)
+      ? setOutput(`${formatNumber(calculateEIA96)} (≤1%)`)
+      : setOutput('Error')
   }
 
-  // Display calculated reistance
+  // Display calculated resistance
   const displayOutput = () => {
     value.match(/r/g) 
       // Show function if character r is matched
