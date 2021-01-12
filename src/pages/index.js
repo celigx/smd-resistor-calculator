@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import "../styles/layout.sass"
-import CircuitBoard from "../assets/CircuitBoard.svg"
+import Resistor from "../assets/Resistor.svg"
 import { digit, multiply } from '../components/EIA96Codes';
 
 export default function Home() {
@@ -92,7 +92,12 @@ export default function Home() {
 
   return (
     <div className="main">
-      <div className="leftScreen">
+      <div className="title-section">
+        <Resistor />
+        <h1 className="title">SMD Resistor Calculator</h1>
+      </div>
+
+      <div className="smd-section">
         <h1 className="title">Enter SMD Code:</h1>
         <div className="smd">
           <span className="square left" />
@@ -100,9 +105,6 @@ export default function Home() {
           <span className="square right" />
         </div>
         <h1 className="output">Resistance: <span className="bold">{output}</span></h1>
-      </div>
-      <div className="rightScreen">
-        <CircuitBoard />
       </div>
     </div>
   )
